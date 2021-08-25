@@ -1,24 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Task from "./components/Task";
+
+const tasks = [
+  {
+    id: 1,
+    description: "Wash car",
+  },
+  {
+    id: 2,
+    description: "Buy groceries",
+  },
+  {
+    id: 3,
+    description: "Pay water bill",
+  },
+  {
+    id: 4,
+    description: "Walk dog",
+  },
+];
 
 function App() {
+  const [todos, setTodos] = useState(tasks);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTodos([...todos, { description: inputValue }]);
+    setInputValue("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='navbar'>my Navbar</div>
+      <div className='App'>
+        <h1>My To Do List</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            type='text'
+            name='task'
+            id='user-input'
+            value={inputValue}
+            onChange={handleChange}
+          />
+          <input type='button' value='Add Task' />
+        </form>
+        <div className='todos-container'>
+          {todos.map((task, index) => (
+            <Task taskInfo={task} key={index} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 
