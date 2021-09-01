@@ -6,4 +6,10 @@
   margin: 10px auto;
   line-height: 50px;
   padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-controller {
+  display: flex;
 }

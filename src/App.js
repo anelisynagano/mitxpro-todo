@@ -31,8 +31,27 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTodos([...todos, { description: inputValue }]);
+    setTodos([...todos, { description: inputValue, id: todos.length + 1 }]);
     setInputValue("");
+  };
+
+  const handleDelete = (taskId) => {
+    const filteredTodos = todos.filter((todo) => todo.id !== taskId);
+    setTodos(filteredTodos);
+  };
+
+  const handleEdit = (taskId, editedTask) => {
+    const editedArray = todos.map((todo) => {
+      if (todo.id !== taskId) {
+        return todo;
+      } else {
+        return {
+          id: taskId,
+          description: editedTask,
+        };
+      }
+    });
+    setTodos(editedArray);
   };
 
   return (
@@ -52,7 +71,12 @@ function App() {
         </form>
         <div className='todos-container'>
           {todos.map((task, index) => (
-            <Task taskInfo={task} key={index} />
+            <Task
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              taskInfo={task}
+              key={index}
+            />
           ))}
         </div>
       </div>
